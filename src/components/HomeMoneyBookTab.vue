@@ -1,5 +1,4 @@
 <template>
-  <div>setting</div>
+  <div>moneyBookTab</div>
 </template>
-
 <script setup></script>

@@ -1,14 +1,15 @@
 <template>
   <!-- header -->
   <HomeHeader @click="iconClicked" />
-
-  <!-- navigation -->
-  <AppLayout />
+  <!-- tabBar -->
+  <HomeTab />
+  <!-- content -->
+  <div>Home view부분</div>
 </template>
 
 <script setup>
-import AppLayout from "@/layouts/AppLayout.vue";
 import HomeHeader from "@/components/HomeHeader.vue";
+import HomeTab from "@/components/HomeTab.vue";
 
 const iconClicked = (actionType) => {
   console.log(actionType);

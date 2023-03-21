@@ -1,14 +1,16 @@
-<!-- header는 자주 바뀌기 때문에 body와 bottom만 묶어놓기 -->
 <template>
-  <div class="body-container">
-    <RouterView></RouterView>
-  </div>
-
-  <div class="bottom-container">
+  <v-app>
+    <v-container>
+      <v-layout>
+        <v-main>
+          <RouterView></RouterView>
+        </v-main>
+      </v-layout>
+    </v-container>
     <AppNavigation />
-  </div>
+  </v-app>
 </template>
 
 <script setup>
-import AppNavigation from '@/components/AppNavigation.vue';
+import AppNavigation from "@/components/AppNavigation.vue";
 </script>

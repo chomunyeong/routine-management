@@ -1,10 +1,10 @@
 <template>
+  <BaseHeader />
   <div>todo</div>
-
-  <!-- navigation -->
-  <AppLayout />
+  <TodoList />
 </template>
 
 <script setup>
-import AppLayout from "@/layouts/AppLayout.vue";
+import BaseHeader from "@/components/BaseHeader.vue";
+import TodoList from "@/components/TodoList.vue";
 </script>

@@ -1,10 +1,8 @@
 <template>
+  <BaseHeader />
   <div>moneyBook</div>
-
-  <!-- navigation -->
-  <AppLayout />
 </template>
 
 <script setup>
-import AppLayout from "@/layouts/AppLayout.vue";
+import BaseHeader from "@/components/BaseHeader.vue";
 </script>
