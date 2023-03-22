@@ -1,95 +1,80 @@
 <template>
-  <v-container fluid>
-    <v-card class="pa-3">
-      <v-row>
-        <v-col>
-          <v-card class="pa-3" outline>차트</v-card>
-        </v-col>
-        <v-col>
-          <div>평균 완료 개수</div>
-          <div>평균 완료율 58.6 %</div>
-          <div>잘 하고 있어요! 78.2 %</div>
-        </v-col>
-      </v-row>
-    </v-card>
+  <v-card class="pa-3">
+    <v-row>
+      <v-col>
+        <v-card class="pa-3" outline>차트</v-card>
+      </v-col>
+      <v-col>
+        <div>평균 완료 개수</div>
+        <div>평균 완료율 58.6 %</div>
+        <div>잘 하고 있어요! 78.2 %</div>
+      </v-col>
+    </v-row>
+  </v-card>
 
-    <v-card class="pa-3 mt-5">
-      <v-row class="pa-2">
-        <span
-          style="
-            color: blueviolet;
-            display: inline-block;
-            width: 95%;
-            text-align: center;
-          "
-          >2월</span
+  <v-card class="pa-3 mt-5">
+    <v-row class="pa-2">
+      <span
+        style="
+          color: blueviolet;
+          display: inline-block;
+          width: 95%;
+          text-align: center;
+        "
+        >2월</span
+      >
+      <v-col>
+        <v-card
+          class="pa-3"
+          style="color: aliceblue; background-color: blueviolet"
+          outline
+          >전체
+          <br />
+          {{ todoList.length }}
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card
+          class="pa-3"
+          style="color: aliceblue; background-color: blueviolet"
+          outline
+          >완료
+          <br />
+          {{ todoList.filter((item) => item.isCompleted).length }}
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card
+          class="pa-3"
+          style="color: aliceblue; background-color: blueviolet"
+          outline
         >
-        <v-col>
-          <v-card
-            class="pa-3"
-            style="color: aliceblue; background-color: blueviolet"
-            outline
-            >전체
-            <br />
-            {{ todoList.length }}
-          </v-card>
-        </v-col>
-        <v-col>
-          <v-card
-            class="pa-3"
-            style="color: aliceblue; background-color: blueviolet"
-            outline
-            >완료
-            <br />
-            {{ todoList.filter((item) => item.isCompleted).length }}
-          </v-card>
-        </v-col>
-        <v-col>
-          <v-card
-            class="pa-3"
-            style="color: aliceblue; background-color: blueviolet"
-            outline
-          >
-            미완료
-            <br />
-            {{
-              todoList.length -
-              todoList.filter((item) => item.isCompleted).length
-            }}
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-card>
+          미완료
+          <br />
+          {{
+            todoList.length - todoList.filter((item) => item.isCompleted).length
+          }}
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-card>
 
-    <v-card class="pa-3 mt-5">
-      <v-row>
-        <v-col>
-          <v-card>
-            <!-- <v-text-field
+  <v-card class="pa-3 mt-5">
+    <!-- <v-text-field
               label="할일"
               variant="outlined"
               v-model="newInputItem"
             ></v-text-field> -->
-            <input type="text" v-model="newTodoItem" />
-          </v-card>
-        </v-col>
-        <v-col>
-          <v-btn color="primary" @click="addTodo">추가</v-btn>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-card class="mt-3" outline>
-            <TodoList :todo-list="todoList" @complete-change="completeChange" />
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-card>
-  </v-container>
+    <!-- <input type="text" v-model="newTodoItem" /> -->
+    <!-- <v-btn color="primary" @click="addTodo">추가</v-btn> -->
+    <TodoList :todo-list="todoList" @complete-change="completeChange" />
+    <TodoListAdd />
+  </v-card>
 </template>
 <script setup>
 import { ref } from "vue";
 import TodoList from "./TodoList.vue";
+import TodoListAdd from "./TodoListAdd.vue";
 
 const newTodoItem = ref("");
 const todoList = ref([

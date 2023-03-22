@@ -4,7 +4,7 @@
       <img src="@/assets/routineLogo.svg" />
     </v-app-bar-title>
 
-    <div class="icon-container">
+    <div class="icon-container mr-5">
       <v-icon
         icon="mdi-checkbox-marked-circle-plus-outline"
         @click="actionClicked('addTodo')"
@@ -27,3 +27,10 @@ const actionClicked = (actionType) => {
   emits("iconClicked", actionType);
 };
 </script>
+
+<style>
+.icon-container {
+  display: flex;
+  gap: 5px;
+}
+</style>

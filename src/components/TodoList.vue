@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { defineEmits, ref } from "vue";
+import { defineEmits } from "vue";
 
 const props = defineProps(["todoList"]);
 const emits = defineEmits(["completeChange"]);

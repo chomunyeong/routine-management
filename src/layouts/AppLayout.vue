@@ -1,11 +1,9 @@
 <template>
   <v-app>
-    <v-container>
-      <v-layout>
-        <v-main>
-          <RouterView></RouterView>
-        </v-main>
-      </v-layout>
+    <v-container class="pt-0">
+      <v-main>
+        <RouterView></RouterView>
+      </v-main>
     </v-container>
     <AppNavigation />
   </v-app>
@@ -14,3 +12,5 @@
 <script setup>
 import AppNavigation from "@/components/AppNavigation.vue";
 </script>
+
+<style></style>

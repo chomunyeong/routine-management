@@ -1,12 +1,10 @@
 <template>
-  <v-layout class="overflow-visible" style="height: 56px">
-    <v-bottom-navigation color="deep-purple" grow>
-      <v-btn v-for="item in items" :key="item.value" :to="item.to" link>
-        <v-icon>{{ item.icon }}</v-icon>
-        <span>{{ item.title }}</span>
-      </v-btn>
-    </v-bottom-navigation>
-  </v-layout>
+  <v-bottom-navigation color="deep-purple" grow>
+    <v-btn v-for="item in items" :key="item.value" :to="item.to" link>
+      <v-icon>{{ item.icon }}</v-icon>
+      <span>{{ item.title }}</span>
+    </v-btn>
+  </v-bottom-navigation>
 </template>
 
 <script setup>

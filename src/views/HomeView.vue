@@ -4,7 +4,7 @@
   <!-- tabBar -->
   <HomeTab />
   <!-- content -->
-  <div>Home view부분</div>
+  <!-- <div>Home view부분</div> -->
 </template>
 
 <script setup>
