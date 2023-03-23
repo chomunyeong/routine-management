@@ -15,7 +15,7 @@
           <v-btn icon dark @click="close">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>할 일</v-toolbar-title>
+          <v-toolbar-title>가계부</v-toolbar-title>
           <v-spacer></v-spacer>
           <!-- 저장버튼 -->
           <v-toolbar-items>
@@ -28,10 +28,18 @@
               <v-icon icon="mdi-note-edit-outline"></v-icon>
               <input
                 type="text"
-                v-model="newTodoItem"
-                placeholder="할 일을 입력해주세요"
+                v-model="newInputItem.title"
+                placeholder="내용을 입력해주세요"
               />
             </template>
+            <!-- <template v-slot:prepend>
+              <v-icon icon="mdi-cash-multiple"></v-icon>
+              <input
+                type="text"
+                v-model="newInputItem.amount"
+                placeholder="금액을 입력해주세요"
+              /> -->
+            <!-- </template> -->
           </v-list-item>
         </v-list>
       </v-card>
@@ -41,20 +49,24 @@
 <script setup>
 import { ref } from "vue";
 
-const newTodoItem = ref("");
+const newInputItem = ref({
+  title: "",
+  amount: "",
+  isIncome: true,
+});
 const dialog = ref(false);
 
-const emits = defineEmits(["addTodo"]);
+const emits = defineEmits(["addMoneyBook"]);
 // 저장
 const save = () => {
-  emits("addTodo", newTodoItem.value);
+  emits("addMoneyBook", newInputItem.value);
   close();
 };
 
 // 닫기
 const close = () => {
   dialog.value = false;
-  newTodoItem.value = "";
+  newInputItem.value = "";
 };
 </script>
 

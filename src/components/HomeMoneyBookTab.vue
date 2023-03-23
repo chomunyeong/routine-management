@@ -50,5 +50,30 @@
       </v-col>
     </v-row>
   </v-card>
+  <v-card class="pa-3 mt-5">
+    <MoneyBook @addMoneyBook="addMoneyBook" />
+    <MoneyBookAdd />
+  </v-card>
 </template>
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import MoneyBook from "./MoneyBook.vue";
+import MoneyBookAdd from "./MoneyBookAdd.vue";
+
+const MoneyBookList = ref([
+  { title: "용돈", amount: 50000, isIncome: true },
+  { title: "커피", amount: 3000, isIncome: false },
+  { title: "점심밥", amount: 8000, isIncome: false },
+  { title: "군것질", amount: 5000, isIncome: false },
+  { title: "교통비", amount: 10000, isIncome: false },
+  { title: "저녁밥", amount: 10000, isIncome: false },
+]);
+
+const addMoneyBook = () => {
+  MoneyBookList.value.push({
+    title: MoneyBookList.value.title,
+    amount: Number(MoneyBookList.value.amount),
+    isIncome: !MoneyBookList.value.isIncome,
+  });
+};
+</script>

@@ -59,16 +59,14 @@
     </v-row>
   </v-card>
 
+  <!-- 할일리스트 -->
   <v-card class="pa-3 mt-5">
-    <!-- <v-text-field
-              label="할일"
-              variant="outlined"
-              v-model="newInputItem"
-            ></v-text-field> -->
-    <!-- <input type="text" v-model="newTodoItem" /> -->
-    <!-- <v-btn color="primary" @click="addTodo">추가</v-btn> -->
-    <TodoList :todo-list="todoList" @complete-change="completeChange" />
-    <TodoListAdd />
+    <TodoList
+      :todo-list="todoList"
+      @complete-change="completeChange"
+      @deleteTodo="deleteTodo"
+    />
+    <TodoListAdd @addTodo="addTodo" />
   </v-card>
 </template>
 <script setup>
@@ -76,7 +74,6 @@ import { ref } from "vue";
 import TodoList from "./TodoList.vue";
 import TodoListAdd from "./TodoListAdd.vue";
 
-const newTodoItem = ref("");
 const todoList = ref([
   { id: 1, todo: "Study JavaScript", isCompleted: false, isEdit: false },
   { id: 2, todo: "Study JSP", isCompleted: false, isEdit: false },
@@ -85,16 +82,18 @@ const todoList = ref([
   { id: 5, todo: "Study DB", isCompleted: false, isEdit: false },
 ]);
 
-//todo 추가
-const addTodo = () => {
-  let newTodoObj = {
+// todo 추가
+const addTodo = (title) => {
+  todoList.value.push({
     id: todoList.value[todoList.value.length - 1].id + 1,
-    todo: newTodoItem.value,
+    todo: title,
     isCompleted: false,
-    isEdit: false,
-  };
-  todoList.value.push(newTodoObj);
-  newTodoItem.value = "";
+  });
+};
+
+// todo 삭제
+const deleteTodo = (index) => {
+  todoList.value.splice(index, 1);
 };
 
 // 미완료 -> 완료

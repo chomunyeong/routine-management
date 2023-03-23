@@ -23,28 +23,43 @@
             {{ todo.todo }}</span
           >
         </label>
-        <!-- 수정인풋 -->
-        <span v-else>
-          <input type="text" :placeholder="todo.todo" />
-        </span>
       </v-col>
+      <div class="container">
+        <div>
+          <todo-list-edit @editTodo="editTodo" />
+        </div>
+        <div>
+          <v-btn
+            icon="mdi-trash-can-outline"
+            size="small"
+            @click="emits('deleteTodo', index)"
+          ></v-btn>
+        </div>
+      </div>
     </v-row>
   </v-container>
 </template>
 
 <script setup>
 import { defineEmits } from "vue";
+import TodoListEdit from "./TodoListEdit.vue";
 
 const props = defineProps(["todoList"]);
-const emits = defineEmits(["completeChange"]);
+const emits = defineEmits(["completeChange", "deleteTodo"]);
 
-//수정인풋
-// const editTodoItem = ref("");
+// 수정
+// const editTodo = (index, value) => {
+//   props.todoList[index].todo = value;
+// };
 </script>
 
 <style>
 .completed-todo {
   text-decoration: line-through;
   text-decoration-color: red;
+}
+
+.container {
+  display: flex;
 }
 </style>
