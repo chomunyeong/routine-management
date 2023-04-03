@@ -8,7 +8,7 @@
           class="check-box"
           :value="todo.isCompleted"
           :id="todo.id"
-          @input="emits('completeChange', index)"
+          @click="emits('completeChange', index)"
         />
         <!-- <v-checkbox
             v-model="todo.isCompleted"
@@ -18,7 +18,7 @@
       </v-col>
       <v-col>
         <!-- 타이틀값 -->
-        <label v-if="!todo.isEdit" :for="todo.id">
+        <label :for="todo.id">
           <span :class="todo.isCompleted ? 'completed-todo' : ''">
             {{ todo.todo }}</span
           >
@@ -26,7 +26,12 @@
       </v-col>
       <div class="container">
         <div>
-          <todo-list-edit @editTodo="editTodo" />
+          <v-btn
+            icon="mdi-calendar-edit-outline"
+            size="small"
+            dark
+            @click="changeEditVisible(index)"
+          ></v-btn>
         </div>
         <div>
           <v-btn
@@ -37,20 +42,35 @@
         </div>
       </div>
     </v-row>
+    <todo-list-edit
+      v-model:isVisible="isVisible"
+      ref="todoListEditRef"
+      @editTodo="editTodo"
+    />
   </v-container>
 </template>
 
 <script setup>
-import { defineEmits } from "vue";
+import { ref } from "vue";
 import TodoListEdit from "./TodoListEdit.vue";
 
 const props = defineProps(["todoList"]);
-const emits = defineEmits(["completeChange", "deleteTodo"]);
+const emits = defineEmits(["completeChange", "deleteTodo", "editTodo"]);
 
 // 수정
-// const editTodo = (index, value) => {
-//   props.todoList[index].todo = value;
-// };
+const editTodo = (index) => {
+  emits("editTodo", index);
+};
+
+const isVisible = ref(false);
+const todoListEditRef = ref(null);
+
+const changeEditVisible = (targetIdx) => {
+  isVisible.value = !isVisible.value;
+  if (isVisible.value) {
+    todoListEditRef.value.setValue(targetIdx, props.todoList[targetIdx].todo);
+  }
+};
 </script>
 
 <style>

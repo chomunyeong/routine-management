@@ -1,19 +1,11 @@
 <template>
   <v-row justify="center">
     <v-dialog
-      v-model="dialog"
+      v-model="computedIsVisible"
       fullscreen
       :scrim="false"
       transition="dialog-bottom-transition"
     >
-      <template v-slot:activator="{ props }">
-        <v-btn
-          icon="mdi-calendar-edit-outline"
-          size="small"
-          dark
-          v-bind="props"
-        ></v-btn>
-      </template>
       <v-card>
         <v-toolbar dark color="deep-purple-accent-4">
           <!-- 닫기버튼 -->
@@ -31,11 +23,7 @@
           <v-list-item>
             <template v-slot:prepend>
               <v-icon icon="mdi-note-edit-outline"></v-icon>
-              <input
-                type="text"
-                v-model="editTodoItem"
-                :placeholder="todoList.todo"
-              />
+              <input type="text" v-model="editTodoItem" />
             </template>
           </v-list-item>
         </v-list>
@@ -44,31 +32,44 @@
   </v-row>
 </template>
 <script setup>
-import { ref } from "vue";
-
-const todoList = ref([
-  { id: 1, todo: "Study JavaScript", isCompleted: false, isEdit: false },
-  { id: 2, todo: "Study JSP", isCompleted: false, isEdit: false },
-  { id: 3, todo: "Study Java", isCompleted: false, isEdit: false },
-  { id: 4, todo: "Study Spring", isCompleted: false, isEdit: false },
-  { id: 5, todo: "Study DB", isCompleted: false, isEdit: false },
-]);
+import { ref, computed } from "vue";
 
 const editTodoItem = ref("");
-const dialog = ref(false);
+const currentTargetIdx = ref("");
 
-const emits = defineEmits(["editTodo"]);
+const props = defineProps(["todoItem", "isVisible"]);
+const emits = defineEmits(["editTodo", "update:isVisible"]);
+
+const computedIsVisible = computed({
+  get() {
+    return props.isVisible;
+  },
+  set(newValue) {
+    emits("update:isVisible", newValue);
+  },
+});
+
 // 저장
-const save = (index) => {
-  emits("editTodo", index, editTodoItem.value);
+const save = () => {
+  emits("editTodo", currentTargetIdx.value, editTodoItem.value);
   close();
 };
 
 // 닫기
 const close = () => {
-  dialog.value = false;
   editTodoItem.value = "";
+  currentTargetIdx.value = null;
+  emits("update:isVisible", false);
 };
+
+const setValue = (idx, title) => {
+  currentTargetIdx.value = idx;
+  editTodoItem.value = title;
+};
+
+defineExpose({
+  setValue,
+});
 </script>
 
 <style>

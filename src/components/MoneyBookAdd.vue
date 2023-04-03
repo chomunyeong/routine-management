@@ -32,14 +32,27 @@
                 placeholder="내용을 입력해주세요"
               />
             </template>
-            <!-- <template v-slot:prepend>
+          </v-list-item>
+          <v-list-item>
+            <template v-slot:prepend>
               <v-icon icon="mdi-cash-multiple"></v-icon>
               <input
                 type="text"
                 v-model="newInputItem.amount"
                 placeholder="금액을 입력해주세요"
-              /> -->
-            <!-- </template> -->
+              />
+            </template>
+          </v-list-item>
+          <v-list-item>
+            <template v-slot:prepend>
+              <v-icon icon="mdi-note-edit-outline"></v-icon>
+              <v-combobox
+                clearable
+                label="수입/지출 선택"
+                :items="['수입', '지출']"
+                variant="underlined"
+              ></v-combobox>
+            </template>
           </v-list-item>
         </v-list>
       </v-card>
@@ -49,14 +62,15 @@
 <script setup>
 import { ref } from "vue";
 
+const emits = defineEmits(["addMoneyBook"]);
+const dialog = ref(false);
+
 const newInputItem = ref({
   title: "",
   amount: "",
   isIncome: true,
 });
-const dialog = ref(false);
 
-const emits = defineEmits(["addMoneyBook"]);
 // 저장
 const save = () => {
   emits("addMoneyBook", newInputItem.value);
@@ -66,7 +80,11 @@ const save = () => {
 // 닫기
 const close = () => {
   dialog.value = false;
-  newInputItem.value = "";
+  newInputItem.value = {
+    title: "",
+    amount: "",
+    isIncome: true,
+  };
 };
 </script>
 

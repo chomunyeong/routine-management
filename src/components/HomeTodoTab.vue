@@ -26,7 +26,11 @@
       <v-col>
         <v-card
           class="pa-3"
-          style="color: aliceblue; background-color: blueviolet"
+          style="
+            color: aliceblue;
+            background-color: blueviolet;
+            text-align: center;
+          "
           outline
           >전체
           <br />
@@ -36,7 +40,11 @@
       <v-col>
         <v-card
           class="pa-3"
-          style="color: aliceblue; background-color: blueviolet"
+          style="
+            color: aliceblue;
+            background-color: blueviolet;
+            text-align: center;
+          "
           outline
           >완료
           <br />
@@ -46,7 +54,11 @@
       <v-col>
         <v-card
           class="pa-3"
-          style="color: aliceblue; background-color: blueviolet"
+          style="
+            color: aliceblue;
+            background-color: blueviolet;
+            text-align: center;
+          "
           outline
         >
           미완료
