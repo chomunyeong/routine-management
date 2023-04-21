@@ -7,7 +7,14 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ props }">
-        <v-btn color="deep-purple-accent-4" dark v-bind="props"> 추가 </v-btn>
+        <v-btn
+          color="deep-purple-accent-4"
+          dark
+          v-bind="props"
+          icon="mdi-plus"
+          size="small"
+        ></v-btn>
+        <!-- <v-btn color="deep-purple-accent-4" dark v-bind="props"> 추가 </v-btn> -->
       </template>
       <v-card>
         <v-toolbar dark color="deep-purple-accent-4">

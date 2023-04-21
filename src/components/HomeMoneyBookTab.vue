@@ -1,5 +1,20 @@
 <template>
-  <v-card class="pa-3">
+  <v-card
+    class="pa-3"
+    style="border: 1.5px solid #e5e5e5; border-radius: 15px; margin-top: 15px"
+  >
+    <v-row>
+      <span
+        style="
+          color: #f4e1f1;
+          display: inline-block;
+          width: 95%;
+          margin-top: 15px;
+          padding-left: 15px;
+        "
+        ><b>{{ month }}월</b></span
+      >
+    </v-row>
     <v-row>
       <v-col>
         <v-card class="pa-3" outline>차트</v-card>
@@ -11,69 +26,84 @@
     </v-row>
   </v-card>
 
-  <v-card class="pa-3 mt-5">
+  <v-card
+    class="pa-3 mt-5"
+    style="border: 1.5px solid #e5e5e5; border-radius: 15px; margin-top: 15px"
+  >
     <v-row class="pa-2">
       <span
         style="
-          color: blueviolet;
+          color: #f4e1f1;
           display: inline-block;
           width: 95%;
           text-align: center;
         "
-        >2월</span
+        ><b>{{ month }}월</b></span
       >
       <v-col>
         <v-card
           class="pa-3"
           style="
+            height: 110px;
             color: aliceblue;
-            background-color: blueviolet;
+            background-color: #f4e1f1;
             text-align: center;
+            border-radius: 10px;
           "
           outline
           >수입
           <br />
-          {{ income }}
+          <p style="margin-top: 10px; font-size: large">
+            <b> {{ income }}</b>
+          </p>
         </v-card>
       </v-col>
       <v-col>
         <v-card
           class="pa-3"
           style="
+            height: 110px;
             color: aliceblue;
-            background-color: blueviolet;
+            background-color: #f4e1f1;
             text-align: center;
+            border-radius: 10px;
           "
           outline
           >지출
           <br />
-          {{ expense }}
+          <p style="margin-top: 10px; font-size: large">
+            <b> {{ expense }}</b>
+          </p>
         </v-card>
       </v-col>
       <v-col>
         <v-card
           class="pa-3"
           style="
+            height: 110px;
             color: aliceblue;
-            background-color: blueviolet;
+            background-color: #f4e1f1;
             text-align: center;
+            border-radius: 10px;
           "
           outline
         >
           전체
           <br />
-          {{ total }}
+          <p style="margin-top: 10px; font-size: large">
+            <b> {{ total }}</b>
+          </p>
         </v-card>
       </v-col>
     </v-row>
   </v-card>
-  <v-card class="pa-3 mt-5">
+  <div class="pa-3 mt-5">
     <MoneyBook
       :MoneyBookList="MoneyBookList"
       @deleteMoneyBook="deleteMoneyBook"
     />
-    <MoneyBookAdd @addMoneyBook="addMoneyBook" />
-  </v-card>
+    <!-- <MoneyBookAdd @addMoneyBook="addMoneyBook" /> -->
+  </div>
 </template>
 <script setup>
 import { ref, computed } from "vue";
@@ -137,4 +167,7 @@ const expense = computed(() => {
   });
   return totalExpense;
 });
+
+let today = new Date();
+let month = today.getMonth() + 1;
 </script>

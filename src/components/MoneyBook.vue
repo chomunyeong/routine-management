@@ -1,7 +1,7 @@
 <template>
   <!-- 날짜 -->
   <div class="date-header">
-    <span class="date">202.03.24(화)</span>
+    <span class="date">{{ year }}.{{ month }}.{{ date }}({{ days }})</span>
     <div class="divider"></div>
   </div>
   <!-- 리스트 -->
@@ -19,13 +19,19 @@
         @click="emits('deleteMoneyBook', index)"
       ></v-btn>
     </div>
-
-    <div></div>
   </div>
 </template>
 <script setup>
 const props = defineProps(["MoneyBookList"]);
 const emits = defineEmits(["deleteMoneyBook"]);
+
+let today = new Date();
+let year = today.getFullYear();
+let month = today.getMonth() + 1;
+let date = today.getDate();
+
+const week = ["일", "월", "화", "수", "목", "금", "토"];
+let days = week[today.getDay()];
 </script>
 
 <style>

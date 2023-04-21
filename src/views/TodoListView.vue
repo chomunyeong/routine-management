@@ -2,6 +2,9 @@
   <div class="header-container">
     <BaseHeader />
   </div>
+  <div class="calender-container">
+    <CalenderWeek />
+  </div>
   <div class="progressBar">
     <v-progress-linear
       v-model="completed"
@@ -9,25 +12,38 @@
       height="25"
     ></v-progress-linear>
     <p>
-      {{ todoList.length }}개 중
-      {{ todoList.filter((item) => item.isCompleted).length }}개 완료!
+      <b>
+        {{ todoList.length }}개 중
+        {{ todoList.filter((item) => item.isCompleted).length }}개 완료!</b
+      >
     </p>
-    <div class="addButton-item">
-      <TodoListAdd @addTodo="addTodo" />
-    </div>
+  </div>
+
+  <div>
     <!-- list -->
     <TodoList
-      :todoList="todoList"
-      @deleteTodo="deleteTodo"
+      :todo-list="todoList"
       @complete-change="completeChange"
+      @deleteTodo="deleteTodo"
+      @editTodo="editTodoRequest"
     />
+    <todo-list-edit
+      v-model:isVisible="isVisible"
+      ref="todoListEditRef"
+      @editTodo="editTodoFinish"
+    />
+  </div>
+  <div class="addButton-item">
+    <TodoListAdd @addTodo="addTodo" />
   </div>
 </template>
 
 <script setup>
 import BaseHeader from "@/components/BaseHeader.vue";
+import CalenderWeek from "@/components/CalenderWeek.vue";
 import TodoList from "@/components/TodoList.vue";
 import TodoListAdd from "@/components/TodoListAdd.vue";
+import TodoListEdit from "@/components/TodoListEdit.vue";
 import { ref, computed } from "vue";
 
 const todoList = ref([
@@ -66,15 +82,37 @@ const completed = computed(() => {
     100
   );
 });
+
+// 팝업창 열림(true)
+const isVisible = ref(false);
+
+// 수정한 글
+const todoListEditRef = ref(null);
+
+// 팝업창 열렸을 때
+const editTodoRequest = (targetIdx) => {
+  isVisible.value = !isVisible.value;
+  if (isVisible.value) {
+    todoListEditRef.value.setValue(targetIdx, todoList[targetIdx].todo);
+  }
+};
+
+// 수정한 글 바꿔넣기(리스트에 수정한 todo)
+const editTodoFinish = (index, value) => {
+  todoList.value[index].todo = value;
+};
 </script>
 
 <style>
 .completed-todo {
   text-decoration: line-through;
-  text-decoration-color: red;
+  text-decoration-color: black;
+}
+.calender-container {
+  padding-top: 20px;
 }
 .progressBar {
-  padding: 10px;
+  padding: 20px;
 }
 .progressBar > p {
   padding: 10px;

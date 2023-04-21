@@ -7,7 +7,14 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ props }">
-        <v-btn color="deep-purple-accent-4" dark v-bind="props"> 추가 </v-btn>
+        <v-btn
+          color="deep-purple-accent-4"
+          dark
+          v-bind="props"
+          icon="mdi-plus"
+          size="small"
+        ></v-btn>
+        <!-- <v-btn dark v-bind="props"> + 추가 </v-btn> -->
       </template>
       <v-card>
         <v-toolbar dark color="deep-purple-accent-4">
@@ -47,9 +54,16 @@
             <template v-slot:prepend>
               <v-icon icon="mdi-note-edit-outline"></v-icon>
               <v-combobox
+                style="min-width: 129px"
+                v-model="itemType"
                 clearable
                 label="수입/지출 선택"
-                :items="['수입', '지출']"
+                item-title="title"
+                item-value="value"
+                :items="[
+                  { title: '수입', value: 1 },
+                  { title: '지출', value: 0 },
+                ]"
                 variant="underlined"
               ></v-combobox>
             </template>
@@ -71,6 +85,8 @@ const newInputItem = ref({
   isIncome: true,
 });
 
+const itemType = ref(null);
+
 // 저장
 const save = () => {
   emits("addMoneyBook", newInputItem.value);
@@ -83,7 +99,7 @@ const close = () => {
   newInputItem.value = {
     title: "",
     amount: "",
-    isIncome: true,
+    isIncome: null,
   };
 };
 </script>
