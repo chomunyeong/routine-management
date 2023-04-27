@@ -120,7 +120,7 @@
       @deleteTodo="deleteTodo"
       @editTodo="editTodoRequest"
     />
-    <TodoListAdd @addTodo="addTodo" />
+    <!-- <TodoListAdd @addTodo="addTodo" /> -->
     <todo-list-edit
       v-model:isVisible="isVisible"
       ref="todoListEditRef"

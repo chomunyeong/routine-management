@@ -1,9 +1,27 @@
 <template>
   <div class="header-container">
-    <BaseHeader />
+    <!-- <BaseHeader :title="'할 일'" /> -->
+    <BaseHeader>
+      <template #left>
+        <slot name="left" @click="moveToday">
+          <p>오늘</p>
+        </slot>
+      </template>
+
+      <template #center>
+        <slot name="center">
+          <p>할 일</p>
+        </slot>
+      </template>
+      <template #right>
+        <slot name="right">
+          <p><v-btn icon="mdi-calendar-multiselect-outline"></v-btn></p>
+        </slot>
+      </template>
+    </BaseHeader>
   </div>
   <div class="calender-container">
-    <CalenderWeek />
+    <CalendarWeek v-model:target-date="targetDate" />
   </div>
   <div class="progressBar">
     <v-progress-linear
@@ -13,8 +31,9 @@
     ></v-progress-linear>
     <p>
       <b>
-        {{ todoList.length }}개 중
-        {{ todoList.filter((item) => item.isCompleted).length }}개 완료!</b
+        {{ computedTodoList.length }}개 중
+        {{ computedTodoList.filter((item) => item.isCompleted).length }}개
+        완료!</b
       >
     </p>
   </div>
@@ -22,7 +41,7 @@
   <div>
     <!-- list -->
     <TodoList
-      :todo-list="todoList"
+      :todo-list="computedTodoList"
       @complete-change="completeChange"
       @deleteTodo="deleteTodo"
       @editTodo="editTodoRequest"
@@ -40,19 +59,69 @@
 
 <script setup>
 import BaseHeader from "@/components/BaseHeader.vue";
-import CalenderWeek from "@/components/CalenderWeek.vue";
+import CalendarWeek from "@/components/CalendarWeek.vue";
 import TodoList from "@/components/TodoList.vue";
 import TodoListAdd from "@/components/TodoListAdd.vue";
 import TodoListEdit from "@/components/TodoListEdit.vue";
+import * as dayjs from "dayjs";
 import { ref, computed } from "vue";
 
+// const props = defineProps(["calendar", "attrs"]);
+
+// // 오늘
+// const moveToday = () => {
+//   props.calendar.value.move(new Date());
+//   attrs.value[0].dates = new Date();
+//   emits("update:targetDate", new Date());
+// };
+
 const todoList = ref([
-  { id: 1, todo: "Study JavaScript", isCompleted: false, isEdit: false },
-  { id: 2, todo: "Study JSP", isCompleted: false, isEdit: false },
-  { id: 3, todo: "Study Java", isCompleted: false, isEdit: false },
-  { id: 4, todo: "Study Spring", isCompleted: false, isEdit: false },
-  { id: 5, todo: "Study DB", isCompleted: false, isEdit: false },
+  {
+    id: 1,
+    todo: "오늘",
+    isCompleted: false,
+    isEdit: false,
+    date: dayjs().toDate(),
+  },
+  {
+    id: 2,
+    todo: "1일전",
+    isCompleted: false,
+    isEdit: false,
+    date: dayjs().subtract(1, "day").toDate(),
+  },
+  {
+    id: 3,
+    todo: "2일전",
+    isCompleted: false,
+    isEdit: false,
+    date: dayjs().subtract(2, "day").toDate(),
+  },
+  {
+    id: 4,
+    todo: "3일전",
+    isCompleted: false,
+    isEdit: false,
+    date: dayjs().subtract(3, "day").toDate(),
+  },
+  {
+    id: 5,
+    todo: "4일전",
+    isCompleted: false,
+    isEdit: false,
+    date: dayjs().subtract(4, "day").toDate(),
+  },
 ]);
+
+// 날짜 초기값
+const targetDate = ref(new Date());
+
+//
+const computedTodoList = computed(() => {
+  return todoList.value.filter((item) => {
+    return dayjs(item.date).isSame(dayjs(targetDate.value), "date");
+  });
+});
 
 // todo 추가
 const addTodo = (title) => {
@@ -93,7 +162,7 @@ const todoListEditRef = ref(null);
 const editTodoRequest = (targetIdx) => {
   isVisible.value = !isVisible.value;
   if (isVisible.value) {
-    todoListEditRef.value.setValue(targetIdx, todoList[targetIdx].todo);
+    todoListEditRef.value.setValue(targetIdx, todoList.value[targetIdx].todo);
   }
 };
 

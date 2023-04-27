@@ -1,7 +1,11 @@
 <template>
   <!-- 날짜 -->
   <div class="date-header">
-    <span class="date">{{ year }}.{{ month }}.{{ date }}({{ days }})</span>
+    <span class="date"
+      >{{ dayjs().year() }}.{{ dayjs().month() + 1 }}.{{ dayjs().date() }}({{
+        days
+      }})</span
+    >
     <div class="divider"></div>
   </div>
   <!-- 리스트 -->
@@ -22,6 +26,8 @@
   </div>
 </template>
 <script setup>
+import * as dayjs from "dayjs";
+
 const props = defineProps(["MoneyBookList"]);
 const emits = defineEmits(["deleteMoneyBook"]);
 
@@ -62,7 +68,6 @@ let days = week[today.getDay()];
   flex-flow: column nowrap;
   gap: 15px;
 }
-
 .income-item {
   color: blue;
 }

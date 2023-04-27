@@ -7,11 +7,15 @@
       view="weekly"
       :attributes="attrs"
       ref="calendar"
+      @dayclick="onDayClicked"
     />
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
+
+const props = defineProps(["targetDate"]);
+const emits = defineEmits(["update:targetDate"]);
 
 const attrs = ref([
   {
@@ -19,14 +23,23 @@ const attrs = ref([
     highlight: {
       color: "pink",
     },
-    dates: new Date(),
+    dates: props.targetDate,
   },
 ]);
 
 const calendar = ref(null);
 
+// 오늘
 const moveToday = () => {
   calendar.value.move(new Date());
+  attrs.value[0].dates = new Date();
+  emits("update:targetDate", new Date());
+};
+
+// async는 현재 사용할 함수를 비동기로 처리하겠다는 선언자
+const onDayClicked = async (calendarDay) => {
+  attrs.value[0].dates = calendarDay.date;
+  emits("update:targetDate", calendarDay.date);
 };
 </script>
 <style scoped>
