@@ -1,10 +1,9 @@
 <template>
   <div class="header-container">
-    <!-- <BaseHeader :title="'할 일'" /> -->
     <BaseHeader>
       <template #left>
-        <slot name="left" @click="moveToday">
-          <p>오늘</p>
+        <slot name="left">
+          <p @click="moveToday">오늘</p>
         </slot>
       </template>
 
@@ -15,13 +14,15 @@
       </template>
       <template #right>
         <slot name="right">
-          <p><v-btn icon="mdi-calendar-multiselect-outline"></v-btn></p>
+          <p style="padding-right: 20px">
+            <Calendar v-model:target-date="targetDate" ref="calendar" />
+          </p>
         </slot>
       </template>
     </BaseHeader>
   </div>
   <div class="calender-container">
-    <CalendarWeek v-model:target-date="targetDate" />
+    <CalendarWeek v-model:target-date="targetDate" ref="calendar" />
   </div>
   <div class="progressBar">
     <v-progress-linear
@@ -32,9 +33,8 @@
     <p>
       <b>
         {{ computedTodoList.length }}개 중
-        {{ computedTodoList.filter((item) => item.isCompleted).length }}개
-        완료!</b
-      >
+        {{ computedTodoList.filter((item) => item.isCompleted).length }}개 완료!
+      </b>
     </p>
   </div>
 
@@ -63,17 +63,16 @@ import CalendarWeek from "@/components/CalendarWeek.vue";
 import TodoList from "@/components/TodoList.vue";
 import TodoListAdd from "@/components/TodoListAdd.vue";
 import TodoListEdit from "@/components/TodoListEdit.vue";
+import Calendar from "@/components/Calendar.vue";
 import * as dayjs from "dayjs";
 import { ref, computed } from "vue";
 
-// const props = defineProps(["calendar", "attrs"]);
+const calendar = ref(null);
 
-// // 오늘
-// const moveToday = () => {
-//   props.calendar.value.move(new Date());
-//   attrs.value[0].dates = new Date();
-//   emits("update:targetDate", new Date());
-// };
+// 오늘
+const moveToday = () => {
+  calendar.value.moveToday();
+};
 
 const todoList = ref([
   {
@@ -116,13 +115,12 @@ const todoList = ref([
 // 날짜 초기값
 const targetDate = ref(new Date());
 
-//
+// 선택날짜 필터로 찾기
 const computedTodoList = computed(() => {
   return todoList.value.filter((item) => {
     return dayjs(item.date).isSame(dayjs(targetDate.value), "date");
   });
 });
-
 // todo 추가
 const addTodo = (title) => {
   todoList.value.push({
@@ -189,5 +187,9 @@ const editTodoFinish = (index, value) => {
 }
 .addButton-item {
   padding: 20px;
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

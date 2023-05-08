@@ -14,7 +14,6 @@
           icon="mdi-plus"
           size="small"
         ></v-btn>
-        <!-- <v-btn color="deep-purple-accent-4" dark v-bind="props"> 추가 </v-btn> -->
       </template>
       <v-card>
         <v-toolbar dark color="deep-purple-accent-4">
@@ -40,6 +39,24 @@
               />
             </template>
           </v-list-item>
+
+          <!-- <v-list-item>
+            <template v-slot:prepend>
+              <v-icon icon="mdi-note-edit-outline"></v-icon>
+              <input
+                type="text"
+                v-model="newTodoItem.month"
+                placeholder="월"
+                style="width: 50px"
+              />
+              <input
+                type="text"
+                v-model="newTodoItem.day"
+                placeholder="일"
+                style="width: 50px"
+              />
+            </template>
+          </v-list-item> -->
         </v-list>
       </v-card>
     </v-dialog>
@@ -47,11 +64,13 @@
 </template>
 <script setup>
 import { ref } from "vue";
+const date = ref(new Date());
 
-const newTodoItem = ref("");
 const dialog = ref(false);
+const newTodoItem = ref("");
 
 const emits = defineEmits(["addTodo"]);
+
 // 저장
 const save = () => {
   emits("addTodo", newTodoItem.value);

@@ -6,7 +6,7 @@
     <v-row>
       <span
         style="
-          color: #f4e1f1;
+          color: #397cb0;
           display: inline-block;
           width: 95%;
           margin-top: 15px;
@@ -33,7 +33,7 @@
     <v-row class="pa-2">
       <span
         style="
-          color: #f4e1f1;
+          color: #397cb0;
           display: inline-block;
           width: 95%;
           text-align: center;
@@ -45,10 +45,11 @@
           class="pa-3"
           style="
             height: 110px;
-            color: aliceblue;
-            background-color: #f4e1f1;
+            color: white;
+            background-color: #397cb0;
             text-align: center;
             border-radius: 10px;
+            box-shadow: inset 0 2px 1px white, 0 2px 3px rgb(0, 0, 0, 0.3);
           "
           outline
           >수입
@@ -63,10 +64,11 @@
           class="pa-3"
           style="
             height: 110px;
-            color: aliceblue;
-            background-color: #f4e1f1;
+            color: white;
+            background: linear-gradient(lightCyan, skyBlue, deepSkyBlue);
             text-align: center;
             border-radius: 10px;
+            box-shadow: inset 0 2px 1px white, 0 2px 3px rgb(0, 0, 0, 0.3);
           "
           outline
           >지출
@@ -81,10 +83,11 @@
           class="pa-3"
           style="
             height: 110px;
-            color: aliceblue;
-            background-color: #f4e1f1;
+            color: white;
+            background-color: #397cb0;
             text-align: center;
             border-radius: 10px;
+            box-shadow: inset 0 2px 1px white, 0 2px 3px rgb(0, 0, 0, 0.3);
           "
           outline
         >

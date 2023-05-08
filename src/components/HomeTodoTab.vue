@@ -55,6 +55,7 @@
             background-color: #6600cc;
             text-align: center;
             border-radius: 10px;
+            box-shadow: inset 0 2px 1px white, 0 2px 3px black;
           "
           outline
           >전체
@@ -70,9 +71,11 @@
           style="
             height: 110px;
             color: aliceblue;
-            background-color: #6600cc;
+            /* background-color: #6600cc; */
+            background: linear-gradient(45deg, purple, pink);
             text-align: center;
             border-radius: 10px;
+            box-shadow: inset 0 2px 1px white, 0 2px 3px black;
           "
           outline
           >완료
@@ -88,9 +91,11 @@
           style="
             height: 110px;
             color: aliceblue;
-            background-color: #6600cc;
+            background: linear-gradient(45deg, purple, pink);
+            /* background-color: #6600cc; */
             text-align: center;
             border-radius: 10px;
+            box-shadow: inset 0 2px 1px white, 0 2px 3px black;
           "
           outline
         >

@@ -55,14 +55,14 @@
               <v-icon icon="mdi-note-edit-outline"></v-icon>
               <v-combobox
                 style="min-width: 129px"
-                v-model="itemType"
+                v-model="newInputItem.isIncome"
                 clearable
                 label="수입/지출 선택"
                 item-title="title"
                 item-value="value"
                 :items="[
-                  { title: '수입', value: 1 },
-                  { title: '지출', value: 0 },
+                  { title: '수입', value: true },
+                  { title: '지출', value: false },
                 ]"
                 variant="underlined"
               ></v-combobox>
@@ -82,14 +82,18 @@ const dialog = ref(false);
 const newInputItem = ref({
   title: "",
   amount: "",
-  isIncome: true,
+  isIncome: null,
 });
-
-const itemType = ref(null);
 
 // 저장
 const save = () => {
-  emits("addMoneyBook", newInputItem.value);
+  const input = {
+    ...newInputItem.value,
+    isIncome: newInputItem.value.isIncome
+      ? newInputItem.value.isIncome.value
+      : null,
+  };
+  emits("addMoneyBook", input);
   close();
 };
 

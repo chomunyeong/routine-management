@@ -1,6 +1,5 @@
 <template>
   <div class="my-calendar">
-    <button class="px-3 py-1" @click="moveToday">오늘</button>
     <VCalendar
       expanded
       transparent
@@ -35,6 +34,10 @@ const moveToday = () => {
   attrs.value[0].dates = new Date();
   emits("update:targetDate", new Date());
 };
+
+defineExpose({
+  moveToday,
+});
 
 // async는 현재 사용할 함수를 비동기로 처리하겠다는 선언자
 const onDayClicked = async (calendarDay) => {

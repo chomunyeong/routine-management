@@ -6,10 +6,6 @@
       </slot>
     </template>
   </BaseHeader>
-  <!-- <div class="calendar-container">
-    <CalendarWeek />
-  </div> -->
-
   <div class="isIncome-container">
     <div class="month">
       <v-btn icon="mdi-menu-left" @onclick="changeMonth(-1)"></v-btn>
@@ -22,34 +18,46 @@
     </p>
     <p>
       수입 <b style="color: green">{{ income }}원</b>
+      <v-btn style="float: right; margin-right: 10px">분석</v-btn>
     </p>
-    <v-btn>분석</v-btn>
   </div>
 
   <div class="moneyBook-container">
     <MoneyBook
+      v-for="item in today"
+      :key="item"
       :MoneyBookList="MoneyBookList"
       @deleteMoneyBook="deleteMoneyBook"
     />
   </div>
-  <MoneyBookAdd
-    @addMoneyBook="addMoneyBook"
-    style="padding-top: 20px; position: relative"
-  />
+  <div class="addButton-item">
+    <MoneyBookAdd @addMoneyBook="addMoneyBook" />
+  </div>
 </template>
 
 <script setup>
 import BaseHeader from "@/components/BaseHeader.vue";
-import CalendarWeek from "@/components/CalendarWeek.vue";
 import MoneyBook from "@/components/MoneyBook.vue";
 import MoneyBookAdd from "@/components/MoneyBookAdd.vue";
 import * as dayjs from "dayjs";
 import { ref, computed } from "vue ";
 
+const today = dayjs().date();
+
+// const today = new Date();
+
+// 이번달 마지막 일
+// const lastDay = new Date(
+//   today.getFullYear(),
+//   today.getMonth() + 1,
+//   0
+// ).getDate();
+
 // 이전달 다음달
 let current_year = new Date().getFullYear();
 let current_month = new Date().getMonth() + 1;
 // dayjs().month() + 1
+
 const changeMonth = (diff) => {
   if (diff == undefined) {
     current_month += 0;
@@ -100,8 +108,14 @@ const MoneyBookList = ref([
   },
 ]);
 
+const addMoneyBook = (inputItem) => {
+  MoneyBookList.value.push({ ...inputItem });
+  console.log(inputItem);
+};
+
 const deleteMoneyBook = (index) => {
   MoneyBookList.value.slice(index, 1);
+  console.log(index);
 };
 
 // 수입
@@ -125,9 +139,6 @@ const expense = computed(() => {
   });
   return totalExpense;
 });
-
-// let today = new Date();
-// let month = today.getMonth() + 1;
 </script>
 <style>
 .moneyBook-container {
@@ -136,5 +147,13 @@ const expense = computed(() => {
 .isIncome-container {
   padding: 20px;
   font-size: 20px;
+}
+.addButton-item {
+  position: relative;
+  padding: 20px;
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
