@@ -114,7 +114,7 @@ const addMoneyBook = (inputItem) => {
 };
 
 const deleteMoneyBook = (index) => {
-  MoneyBookList.value.slice(index, 1);
+  MoneyBookList.value.splice(index, 1);
   console.log(index);
 };
 

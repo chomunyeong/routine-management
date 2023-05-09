@@ -24,8 +24,8 @@
               <VCalendar
                 expanded
                 :initial-page="{
-                  month: dayjs().month() + 1,
                   year: dayjs().year(),
+                  month: dayjs().month() + 1,
                 }"
                 :attributes="attributes"
                 ref="calendar"
@@ -54,6 +54,7 @@ const attributes = ref([
       fillMode: "outline",
     },
     dates: new Date(),
+    // dates: props.targetDate,
   },
   {
     dot: true,
@@ -64,7 +65,6 @@ const attributes = ref([
     // dates수정해야함!!!
   },
 ]);
-
 
 const dialog = ref(false);
 

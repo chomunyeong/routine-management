@@ -15,14 +15,10 @@
         "
       >
         <slot name="left"></slot>
-        <!-- <b>{{ props.title }}</b> -->
         <slot name="center"></slot>
         <slot name="right"></slot>
       </span>
     </v-app-bar-title>
-    <!-- <v-btn icon="mdi-calendar-multiselect-outline"></v-btn> -->
   </v-app-bar>
 </template>
-<script setup>
-const props = defineProps("title");
-</script>
+<script setup></script>

@@ -9,10 +9,11 @@
         icon="mdi-checkbox-marked-circle-plus-outline"
         @click="actionClicked('addTodo')"
       ></v-icon>
-      <v-icon
+      <!-- <v-icon
         icon="mdi-text-box-search-outline"
         @click="actionClicked('search')"
-      ></v-icon>
+      ></v-icon> -->
+      <Search />
       <v-icon
         icon="mdi-bell-badge-outline"
         @click="actionClicked('noti')"
@@ -22,7 +23,10 @@
 </template>
 
 <script setup>
+import Search from "./Search.vue";
+
 const emits = defineEmits(["iconClicked"]);
+
 const actionClicked = (actionType) => {
   emits("iconClicked", actionType);
 };
