@@ -3,6 +3,7 @@
     class="pa-3"
     style="border: 1.5px solid #e5e5e5; border-radius: 15px; margin-top: 15px"
   >
+    <v-row><ChartTodo :todoList="todoList" /></v-row>
     <v-row>
       <span
         style="
@@ -15,9 +16,10 @@
         ><b>{{ month }}월</b></span
       >
     </v-row>
+
     <v-row>
       <v-col cols="2">
-        <v-card class="pa-3" outline>차트</v-card>
+        <v-card class="pa-3" outline> 차트</v-card>
       </v-col>
       <v-col>
         <div>
@@ -136,32 +138,71 @@
 <script setup>
 import { ref } from "vue";
 import TodoList from "./TodoList.vue";
-import TodoListAdd from "./TodoListAdd.vue";
+// import TodoListAdd from "./TodoListAdd.vue";
 import TodoListEdit from "./TodoListEdit.vue";
+import ChartTodo from "./ChartTodo.vue";
+import * as dayjs from "dayjs";
 
 const todoList = ref([
-  { id: 1, todo: "Study JavaScript", isCompleted: false, isEdit: false },
-  { id: 2, todo: "Study JSP", isCompleted: false, isEdit: false },
-  { id: 3, todo: "Study Java", isCompleted: false, isEdit: false },
-  { id: 4, todo: "Study Spring", isCompleted: false, isEdit: false },
-  { id: 5, todo: "Study DB", isCompleted: false, isEdit: false },
+  {
+    id: 1,
+    todo: "오늘",
+    isCompleted: true,
+    isEdit: false,
+    date: dayjs().toDate(),
+  },
+  {
+    id: 2,
+    todo: "1일전",
+    isCompleted: false,
+    isEdit: false,
+    date: dayjs().subtract(1, "day").toDate(),
+  },
+  {
+    id: 3,
+    todo: "2일전",
+    isCompleted: false,
+    isEdit: false,
+    date: dayjs().subtract(2, "day").toDate(),
+  },
+  {
+    id: 4,
+    todo: "3일전",
+    isCompleted: false,
+    isEdit: false,
+    date: dayjs().subtract(3, "day").toDate(),
+  },
+  {
+    id: 5,
+    todo: "4일전",
+    isCompleted: false,
+    isEdit: false,
+    date: dayjs().subtract(4, "day").toDate(),
+  },
+  {
+    id: 6,
+    todo: "과제하기",
+    isCompleted: false,
+    isEdit: false,
+    date: dayjs().toDate(),
+  },
 ]);
 
 // todo 추가
-const addTodo = (title) => {
-  todoList.value.push({
-    id: todoList.value[todoList.value.length - 1].id + 1,
-    todo: title,
-    isCompleted: false,
-  });
-};
+// const addTodo = (title) => {
+//   todoList.value.push({
+//     id: todoList.value[todoList.value.length - 1].id + 1,
+//     todo: title,
+//     isCompleted: false,
+//   });
+// };
 
 // todo 삭제
 const deleteTodo = (index) => {
   todoList.value.splice(index, 1);
 };
 
-// 미완료 -> 완료
+// 미완료 -> 완료(밑줄)
 const completeChange = (index) => {
   // console.log(todoList.value[index].isCompleted);
   todoList.value[index].isCompleted = !todoList.value[index].isCompleted;

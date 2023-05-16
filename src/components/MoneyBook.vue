@@ -34,10 +34,10 @@ import * as dayjs from "dayjs";
 const props = defineProps(["MoneyBookList"]);
 const emits = defineEmits(["deleteMoneyBook"]);
 
-let today = new Date();
+let today = ref(new Date());
 
 const week = ["일", "월", "화", "수", "목", "금", "토"];
-let days = week[today.getDay()];
+let days = week[today.value.getDay()];
 
 // 날짜 초기값
 const targetDate = ref(new Date());

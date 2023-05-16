@@ -15,7 +15,7 @@
       <template #right>
         <slot name="right">
           <p style="padding-right: 20px">
-            <Calendar v-model:target-date="targetDate" ref="calendar" />
+            <Calendar :dateList="todoList" ref="calendar" />
           </p>
         </slot>
       </template>
@@ -65,7 +65,7 @@ import TodoListAdd from "@/components/TodoListAdd.vue";
 import TodoListEdit from "@/components/TodoListEdit.vue";
 import Calendar from "@/components/Calendar.vue";
 import * as dayjs from "dayjs";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 const calendar = ref(null);
 
@@ -110,7 +110,26 @@ const todoList = ref([
     isEdit: false,
     date: dayjs().subtract(4, "day").toDate(),
   },
+  {
+    id: 6,
+    todo: "과제하기",
+    isCompleted: false,
+    isEdit: false,
+    date: dayjs().toDate(),
+  },
 ]);
+
+// onMounted(() => {
+//   setTimeout(() => {
+//     todoList.value.push({
+//       id: 6,
+//       todo: "5일전",
+//       isCompleted: false,
+//       isEdit: false,
+//       date: dayjs().subtract(5, "day").toDate(),
+//     });
+//   }, 5000);
+// });
 
 // 날짜 초기값
 const targetDate = ref(new Date());
@@ -121,6 +140,7 @@ const computedTodoList = computed(() => {
     return dayjs(item.date).isSame(dayjs(targetDate.value), "date");
   });
 });
+
 // todo 추가
 const addTodo = (title) => {
   todoList.value.push({
@@ -144,8 +164,8 @@ const completeChange = (index) => {
 // progressBar
 const completed = computed(() => {
   return (
-    (todoList.value.filter((item) => item.isCompleted).length /
-      todoList.value.length) *
+    (computedTodoList.value.filter((item) => item.isCompleted).length /
+      computedTodoList.value.length) *
     100
   );
 });

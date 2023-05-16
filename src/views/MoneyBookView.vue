@@ -8,9 +8,9 @@
   </BaseHeader>
   <div class="isIncome-container">
     <div class="month">
-      <v-btn icon="mdi-menu-left" @onclick="changeMonth(-1)"></v-btn>
-      <span @onclick="changeMonth()">{{ current_month }}월</span>
-      <v-btn icon="mdi-menu-right" @onclick="changeMonth(+1)"></v-btn>
+      <v-btn icon="mdi-menu-left" @click="changeMonth(-1)"></v-btn>
+      <span>{{ current_month }}월</span>
+      <v-btn icon="mdi-menu-right" @click="changeMonth(+1)"></v-btn>
     </div>
     <br />
     <p>
@@ -21,14 +21,17 @@
       <v-btn style="float: right; margin-right: 10px">분석</v-btn>
     </p>
   </div>
-
+  <div v-for="item in sortedMoneyBookList" :key="item.date">
+    <p>{{ dayjs(item.date).format("YYYY/MM/DD") }} - {{ item.title }}</p>
+  </div>
   <div class="moneyBook-container">
     <MoneyBook
-      v-for="item in today"
-      :key="item"
+      v-for="item in sortedMoneyBookList"
+      :key="item.date"
       :MoneyBookList="MoneyBookList"
       @deleteMoneyBook="deleteMoneyBook"
-    />
+    >
+    </MoneyBook>
   </div>
   <div class="addButton-item">
     <MoneyBookAdd @addMoneyBook="addMoneyBook" />
@@ -42,10 +45,6 @@ import MoneyBookAdd from "@/components/MoneyBookAdd.vue";
 import * as dayjs from "dayjs";
 import { ref, computed } from "vue ";
 
-const today = dayjs().date();
-
-// const today = new Date();
-
 // 이번달 마지막 일
 // const lastDay = new Date(
 //   today.getFullYear(),
@@ -53,25 +52,22 @@ const today = dayjs().date();
 //   0
 // ).getDate();
 
+const today = dayjs().date();
+
 // 이전달 다음달
-let current_year = new Date().getFullYear();
-let current_month = new Date().getMonth() + 1;
-// dayjs().month() + 1
+// let current_year = dayjs().year();
+let current_month = ref(dayjs().month() + 1);
 
 const changeMonth = (diff) => {
-  if (diff == undefined) {
-    current_month += 0;
-  } else {
-    current_month = current_month + diff;
-
-    if (current_month == 0) {
-      current_year = current_year - 1;
-      current_month = 12;
-    } else if (current_month == 13) {
-      current_year = current_year + 1;
-      current_month = 1;
-    }
+  if (current_month.value + diff > 12) {
+    current_month.value = 1;
+    return;
   }
+  if (current_month.value + diff < 1) {
+    current_month.value = 12;
+    return;
+  }
+  current_month.value = current_month.value + diff;
 };
 
 const MoneyBookList = ref([
@@ -107,6 +103,13 @@ const MoneyBookList = ref([
     date: dayjs().subtract(5, "day").toDate(),
   },
 ]);
+
+const sortedMoneyBookList = MoneyBookList.value.sort(
+  (a, b) => new Date(b.date) - new Date(a.date)
+);
+sortedMoneyBookList.forEach((item) => {
+  console.log(`${dayjs(item.date).format("YYYY/MM/DD")} - ${item.title}`);
+});
 
 const addMoneyBook = (inputItem) => {
   MoneyBookList.value.push({ ...inputItem });

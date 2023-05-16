@@ -22,6 +22,7 @@
           <v-list-item>
             <div class="calendar-container">
               <VCalendar
+                borderless
                 expanded
                 :initial-page="{
                   year: dayjs().year(),
@@ -29,11 +30,26 @@
                 }"
                 :attributes="attributes"
                 ref="calendar"
+                @dayclick="onDayClicked"
               />
             </div>
+            <v-divider style="padding-bottom: 10px" :thickness="2"></v-divider>
           </v-list-item>
-          <v-list-item>
-            <p>리스트 넣기</p>
+          <span style="padding-left: 40px; font-size: 20px; color: black">{{
+            dayjs(activeDate).format("M.DD")
+          }}</span>
+          <v-list-item v-for="item in activeDateList" :key="item.id">
+            <!-- <span>{{ dayjs(item.date).format("YYYY년MM월DD일") }}</span> -->
+            <span
+              style="
+                padding-left: 40px;
+                font-size: 17px;
+                font-weight: bold;
+                color: #6600cc;
+              "
+            >
+              ｜ {{ item.todo }}
+            </span>
           </v-list-item>
         </v-list>
       </v-card>
@@ -42,29 +58,44 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import * as dayjs from "dayjs";
+
+const props = defineProps(["dateList"]);
 
 const calendar = ref(null);
 
-const attributes = ref([
-  {
-    highlight: {
-      color: "purple",
-      fillMode: "outline",
+// 날짜 초기화
+const activeDate = ref(new Date());
+
+// 날짜 클릭한 곳으로 바뀌게
+const onDayClicked = (calendarDay) => {
+  activeDate.value = calendarDay.date;
+};
+
+// 선택날짜에 맞는 List의 todo찾기
+const activeDateList = computed(() => {
+  const activeDateFilterList = props.dateList.filter((item) => {
+    return dayjs(activeDate.value).isSame(dayjs(item.date), "date");
+  });
+  return activeDateFilterList;
+});
+
+const attributes = computed(() => {
+  return [
+    {
+      highlight: {
+        color: "purple",
+        fillMode: "outline",
+      },
+      dates: activeDate.value,
     },
-    dates: new Date(),
-    // dates: props.targetDate,
-  },
-  {
-    dot: true,
-    dates: [
-      new Date(dayjs().year(), dayjs().month(), 7),
-      new Date(dayjs().year(), dayjs().month(), 6),
-    ],
-    // dates수정해야함!!!
-  },
-]);
+    {
+      dot: true,
+      dates: props.dateList.map((item) => item.date),
+    },
+  ];
+});
 
 const dialog = ref(false);
 

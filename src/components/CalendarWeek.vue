@@ -40,6 +40,7 @@ defineExpose({
 });
 
 // async는 현재 사용할 함수를 비동기로 처리하겠다는 선언자
+// 클릭 날짜로 옮기기
 const onDayClicked = async (calendarDay) => {
   attrs.value[0].dates = calendarDay.date;
   emits("update:targetDate", calendarDay.date);

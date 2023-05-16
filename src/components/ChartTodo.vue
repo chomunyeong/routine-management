@@ -1,30 +1,43 @@
 <template>
   <div>
-    <h1>hi</h1>
-    <canvas id="badCanvas1" width="400" height="100"></canvas>
+    {{ complete }}
   </div>
+  <DoughnutChart :chart-data="data" css-classes="chart-container" />
 </template>
+
 <script setup>
-import Chart from "chart.js/auto";
+import { DoughnutChart } from "vue-chart-3";
+import { ref, computed } from "vue";
+import { Chart, DoughnutController, ArcElement } from "chart.js";
+Chart.register(DoughnutController, ArcElement);
 
-const config = {
-  type: "doughnut",
-  data: data,
-};
+const props = defineProps(["todoList"]);
 
-const data = {
-  labels: ["Red", "Blue", "Yellow"],
+const complete = ref(props.todoList.filter((item) => item.isCompleted).length);
+
+const incomplete = ref(
+  props.todoList.length -
+    props.todoList.filter((item) => item.isCompleted).length
+);
+
+const dataValues = ref([complete, incomplete]);
+
+const data = computed(() => ({
+  labels: ["완료", "미완료"],
+
   datasets: [
     {
-      label: "My First Dataset",
-      data: [300, 50, 100],
-      backgroundColor: [
-        "rgb(255, 99, 132)",
-        "rgb(54, 162, 235)",
-        "rgb(255, 205, 86)",
-      ],
-      hoverOffset: 4,
+      data: dataValues.value,
+      backgroundColor: ["#6600cc", "pink"],
     },
   ],
-};
+}));
+
+// const options = ref([
+//   plugins: {
+//     title: {
+//       text:"Bar"
+//     }
+//   }
+// ])
 </script>
