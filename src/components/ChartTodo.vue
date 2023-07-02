@@ -1,13 +1,13 @@
 <template>
-  <div>
-    {{ complete }}
+  <div class="chartBox">
+    <div class="chart-container">
+      <canvas ref="chartCanvas" width="100px" height="100px"></canvas>
+    </div>
   </div>
-  <DoughnutChart :chart-data="data" css-classes="chart-container" />
 </template>
 
 <script setup>
-import { DoughnutChart } from "vue-chart-3";
-import { ref, computed } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { Chart, DoughnutController, ArcElement } from "chart.js";
 Chart.register(DoughnutController, ArcElement);
 
@@ -20,24 +20,43 @@ const incomplete = ref(
     props.todoList.filter((item) => item.isCompleted).length
 );
 
-const dataValues = ref([complete, incomplete]);
-
-const data = computed(() => ({
+const data = ref({
   labels: ["완료", "미완료"],
 
   datasets: [
     {
-      data: dataValues.value,
+      data: [complete.value, incomplete.value],
       backgroundColor: ["#6600cc", "pink"],
     },
   ],
-}));
+});
 
-// const options = ref([
-//   plugins: {
-//     title: {
-//       text:"Bar"
-//     }
-//   }
-// ])
+let chart;
+const chartCanvas = ref(null);
+
+onMounted(() => {
+  createChart();
+});
+
+watch([complete, incomplete], () => {
+  updateChart();
+});
+
+function createChart() {
+  const ctx = chartCanvas.value.getContext("2d");
+
+  chart = new Chart(ctx, {
+    type: "doughnut",
+    data: data.value,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+    },
+  });
+}
+
+const updateChart = () => {
+  chart.data.datasets[0].data = [complete.value, incomplete.value];
+  chart.update();
+};
 </script>

@@ -1,5 +1,4 @@
 <template>
-  <!-- <v-tabs fixed-tabs v-model="tab" color="#6600cc" align-tabs="center"></v-tabs> -->
   <v-tabs v-model="tab" color="#6600cc" align-tabs="center">
     <v-tab :value="1">오늘 할일</v-tab>
     <v-tab :value="2">가계부</v-tab>

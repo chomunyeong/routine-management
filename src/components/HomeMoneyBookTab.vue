@@ -33,7 +33,7 @@
     <v-row class="pa-2">
       <span
         style="
-          color: #397cb0;
+          color: #6600cc;
           display: inline-block;
           width: 95%;
           text-align: center;
@@ -45,8 +45,8 @@
           class="pa-3"
           style="
             height: 110px;
-            color: white;
-            background-color: #397cb0;
+            color: #6600cc;
+            background-color: #ece7f6;
             text-align: center;
             border-radius: 10px;
             box-shadow: inset 0 2px 1px white, 0 2px 3px rgb(0, 0, 0, 0.3);
@@ -64,8 +64,8 @@
           class="pa-3"
           style="
             height: 110px;
-            color: white;
-            background: linear-gradient(lightCyan, skyBlue, deepSkyBlue);
+            color: #6600cc;
+            background: #ece7f6;
             text-align: center;
             border-radius: 10px;
             box-shadow: inset 0 2px 1px white, 0 2px 3px rgb(0, 0, 0, 0.3);
@@ -83,8 +83,8 @@
           class="pa-3"
           style="
             height: 110px;
-            color: white;
-            background-color: #397cb0;
+            color: #6600cc;
+            background-color: #ece7f6;
             text-align: center;
             border-radius: 10px;
             box-shadow: inset 0 2px 1px white, 0 2px 3px rgb(0, 0, 0, 0.3);
@@ -112,14 +112,45 @@
 import { ref, computed } from "vue";
 import MoneyBook from "./MoneyBook.vue";
 import MoneyBookAdd from "./MoneyBookAdd.vue";
-
+import * as dayjs from "dayjs";
 const MoneyBookList = ref([
-  { title: "용돈", amount: 50000, isIncome: true },
-  { title: "커피", amount: 3000, isIncome: false },
-  { title: "점심밥", amount: 8000, isIncome: false },
-  { title: "군것질", amount: 5000, isIncome: false },
-  { title: "교통비", amount: 10000, isIncome: false },
-  { title: "저녁밥", amount: 10000, isIncome: false },
+  { title: "용돈", amount: 50000, isIncome: true, date: dayjs().toDate() },
+  {
+    title: "커피",
+    amount: 3000,
+    isIncome: false,
+    date: dayjs().subtract(1, "day").toDate(),
+  },
+  {
+    title: "점심밥",
+    amount: 8000,
+    isIncome: false,
+    date: dayjs().subtract(2, "day").toDate(),
+  },
+  {
+    title: "군것질",
+    amount: 5000,
+    isIncome: false,
+    date: dayjs().subtract(3, "day").toDate(),
+  },
+  {
+    title: "교통비",
+    amount: 10000,
+    isIncome: false,
+    date: dayjs().subtract(4, "day").toDate(),
+  },
+  {
+    title: "저녁밥",
+    amount: 10000,
+    isIncome: false,
+    date: dayjs().subtract(5, "day").toDate(),
+  },
+  {
+    title: "쇼핑",
+    amount: 10000,
+    isIncome: false,
+    date: dayjs().subtract(6, "day").toDate(),
+  },
 ]);
 
 // 추가

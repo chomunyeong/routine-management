@@ -54,7 +54,7 @@ const computedMoneyBook = computed(() => {
   padding: 20px;
 }
 .date-header {
-  display: flex;
+  /* display: flex; */
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
@@ -70,6 +70,7 @@ const computedMoneyBook = computed(() => {
   width: 100%;
   height: 1px;
   border-bottom: 1px dotted #868686;
+  padding-top: 10px;
 }
 .item-list {
   padding-left: 15px;

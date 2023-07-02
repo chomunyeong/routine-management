@@ -2,6 +2,7 @@
   <v-app>
     <v-container class="pt-0">
       <v-main>
+        <!-- 라우터화면이 아래에 출력 -->
         <RouterView></RouterView>
       </v-main>
     </v-container>

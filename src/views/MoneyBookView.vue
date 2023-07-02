@@ -7,32 +7,78 @@
     </template>
   </BaseHeader>
   <div class="isIncome-container">
-    <div class="month">
+    <div class="month-list">
       <v-btn icon="mdi-menu-left" @click="changeMonth(-1)"></v-btn>
-      <span>{{ current_month }}월</span>
+      <span style="margin-left: 15px; margin-right: 15px; color: white"
+        >{{ current_month }}월</span
+      >
       <v-btn icon="mdi-menu-right" @click="changeMonth(+1)"></v-btn>
     </div>
     <br />
-    <p>
-      지출 <b>{{ -expense }}원</b>
+    <p style="color: white">
+      지출 <b style="color: white">{{ -expense }}원</b>
     </p>
-    <p>
-      수입 <b style="color: green">{{ income }}원</b>
-      <v-btn style="float: right; margin-right: 10px">분석</v-btn>
+    <p style="color: white">
+      수입 <b style="color: green">{{ -income }}원</b>
     </p>
   </div>
-  <div v-for="item in sortedMoneyBookList" :key="item.date">
+  <!-- <v-divider
+    thickness="20px"
+    style="color: violet; margin-left: -50px"
+  ></v-divider> -->
+  <!-- MoneyBook.vue -->
+  <!-- <div v-for="item in sortedMoneyBookList" :key="item.date">
     <p>{{ dayjs(item.date).format("YYYY/MM/DD") }} - {{ item.title }}</p>
-  </div>
-  <div class="moneyBook-container">
-    <MoneyBook
+  </div> -->
+  <!-- <div class="moneyBook-container">
+    <MoneyBookedit
       v-for="item in sortedMoneyBookList"
       :key="item.date"
       :MoneyBookList="MoneyBookList"
-      @deleteMoneyBook="deleteMoneyBook"
+    /> -->
+  <MoneyBook
+    v-for="item in sortedMoneyBookList"
+    :key="item.date"
+    :MoneyBookList="MoneyBookList"
+    @deleteMoneyBook="deleteMoneyBook"
+  >
+  </MoneyBook>
+  <!-- </div> -->
+  <!-- 날짜 -->
+  <div class="all-list">
+    <div
+      class="money-list"
+      v-for="item in filteredSortDayList"
+      :key="item.date"
     >
-    </MoneyBook>
+      <div class="date-header">
+        <span class="date">
+          {{ dayjs(item.date).format("D일") }} {{ getDayOfWeek(item.date) }}요일
+        </span>
+        <div class="divider"></div>
+      </div>
+      <!-- 리스트 -->
+      <div class="item-list">
+        <div
+          v-for="(subItem, index) in item.list"
+          :class="[subItem.isIncome ? 'income-item' : 'expense-item']"
+          :key="index"
+        >
+          <span>{{ subItem.title }}</span>
+          <span style="float: right"
+            >₩ {{ subItem.amount }}
+            <v-btn
+              icon="mdi-trash-can-outline"
+              size="small"
+              style="margin-left: 10px"
+              @click="emits('deleteMoneyBook', index)"
+            ></v-btn>
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
+
   <div class="addButton-item">
     <MoneyBookAdd @addMoneyBook="addMoneyBook" />
   </div>
@@ -40,22 +86,19 @@
 
 <script setup>
 import BaseHeader from "@/components/BaseHeader.vue";
-import MoneyBook from "@/components/MoneyBook.vue";
 import MoneyBookAdd from "@/components/MoneyBookAdd.vue";
 import * as dayjs from "dayjs";
 import { ref, computed } from "vue ";
 
-// 이번달 마지막 일
-// const lastDay = new Date(
-//   today.getFullYear(),
-//   today.getMonth() + 1,
-//   0
-// ).getDate();
+let today = ref(new Date());
 
-const today = dayjs().date();
+const getDayOfWeek = (date) => {
+  const week = ["일", "월", "화", "수", "목", "금", "토"];
+  const dayIndex = dayjs(date).day();
+  return week[dayIndex];
+};
 
 // 이전달 다음달
-// let current_year = dayjs().year();
 let current_month = ref(dayjs().month() + 1);
 
 const changeMonth = (diff) => {
@@ -79,22 +122,22 @@ const MoneyBookList = ref([
     date: dayjs().subtract(1, "day").toDate(),
   },
   {
+    title: "약국",
+    amount: 8000,
+    isIncome: false,
+    date: dayjs().subtract(1, "day").toDate(),
+  },
+  {
     title: "점심밥",
     amount: 8000,
     isIncome: false,
     date: dayjs().subtract(2, "day").toDate(),
   },
   {
-    title: "군것질",
-    amount: 5000,
+    title: "카페",
+    amount: 6000,
     isIncome: false,
-    date: dayjs().subtract(3, "day").toDate(),
-  },
-  {
-    title: "교통비",
-    amount: 10000,
-    isIncome: false,
-    date: dayjs().subtract(4, "day").toDate(),
+    date: dayjs().subtract(2, "day").toDate(),
   },
   {
     title: "저녁밥",
@@ -102,14 +145,76 @@ const MoneyBookList = ref([
     isIncome: false,
     date: dayjs().subtract(5, "day").toDate(),
   },
+  {
+    title: "쇼핑",
+    amount: 10000,
+    isIncome: false,
+    date: dayjs().subtract(6, "day").toDate(),
+  },
 ]);
 
-const sortedMoneyBookList = MoneyBookList.value.sort(
-  (a, b) => new Date(b.date) - new Date(a.date)
-);
-sortedMoneyBookList.forEach((item) => {
-  console.log(`${dayjs(item.date).format("YYYY/MM/DD")} - ${item.title}`);
+const sortDayList = computed(() => {
+  const sortedMoneyBookList = MoneyBookList.value.sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+  const resultList = [];
+
+  for (let item of sortedMoneyBookList) {
+    if (resultList.length === 0) {
+      resultList.push({
+        date: dayjs(item.date).startOf("date"),
+        list: [
+          {
+            title: item.title,
+            isIncome: item.isIncome,
+            amount: item.amount,
+            date: item.date,
+          },
+        ],
+      });
+    } else {
+      const beforeItem = resultList[resultList.length - 1];
+
+      if (
+        dayjs(beforeItem.date).isSame(dayjs(item.date).startOf("date"), "date")
+      ) {
+        resultList[resultList.length - 1].list.push({
+          title: item.title,
+          isIncome: item.isIncome,
+          amount: item.amount,
+          date: item.date,
+        });
+      } else {
+        resultList.push({
+          date: dayjs(item.date).startOf("date"),
+          list: [
+            {
+              title: item.title,
+              isIncome: item.isIncome,
+              amount: item.amount,
+              date: item.date,
+            },
+          ],
+        });
+      }
+    }
+  }
+  return resultList;
 });
+
+const filteredSortDayList = computed(() => {
+  const filteredList = sortDayList.value.filter((item) =>
+    dayjs(item.date).isSame(
+      dayjs(today.value).month(current_month.value - 1),
+      "month"
+    )
+  );
+  return filteredList;
+});
+
+// sortedMoneyBookList.forEach((item) => {
+//   console.log(`${dayjs(item.date).format("YYYY/MM/DD")} - ${item.title}`);
+// });
 
 const addMoneyBook = (inputItem) => {
   MoneyBookList.value.push({ ...inputItem });
@@ -125,8 +230,8 @@ const deleteMoneyBook = (index) => {
 const income = computed(() => {
   let totalIncome = 0;
   MoneyBookList.value.forEach((item) => {
-    if (item.isIncome) {
-      totalIncome += item.amount;
+    if (dayjs(item.date).month() + 1 === current_month.value && item.isIncome) {
+      totalIncome -= item.amount;
     }
   });
   return totalIncome;
@@ -136,7 +241,10 @@ const income = computed(() => {
 const expense = computed(() => {
   let totalExpense = 0;
   MoneyBookList.value.forEach((item) => {
-    if (!item.isIncome) {
+    if (
+      dayjs(item.date).month() + 1 === current_month.value &&
+      !item.isIncome
+    ) {
       totalExpense -= item.amount;
     }
   });
@@ -150,6 +258,10 @@ const expense = computed(() => {
 .isIncome-container {
   padding: 20px;
   font-size: 20px;
+  background-color: #6600cc;
+  margin-left: -16px;
+  margin-right: -16px;
+  padding-top: 40px;
 }
 .addButton-item {
   position: relative;
@@ -158,5 +270,12 @@ const expense = computed(() => {
   bottom: 70px;
   left: 50%;
   transform: translateX(-50%);
+}
+.money-list {
+  padding: 10px 5px 10px 5px;
+}
+.all-list {
+  padding-top: 30px;
+  padding-bottom: 50px;
 }
 </style>

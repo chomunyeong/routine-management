@@ -13,21 +13,17 @@
           margin-top: 15px;
           padding-left: 15px;
         "
-        ><b>{{ month }}월</b></span
       >
+      </span>
     </v-row>
-
     <v-row>
-      <v-col cols="2">
-        <v-card class="pa-3" outline> 차트</v-card>
-      </v-col>
       <v-col>
         <div>
           <p>평균 완료 개수</p>
           <p>평균 완료율 58.6 %</p>
           <br />
           <p style="font-size: 19px; color: #4c0090">
-            <b>잘 하고 있어요! 78.2 %</b>
+            <b>잘 하고 있어요!</b>
           </p>
         </div>
       </v-col>
@@ -74,7 +70,6 @@
             height: 110px;
             color: aliceblue;
             background-color: #6600cc;
-            /* background: linear-gradient(45deg, purple, pink); */
             text-align: center;
             border-radius: 10px;
             box-shadow: inset 0 2px 1px white, 0 2px 3px black;
@@ -93,7 +88,6 @@
           style="
             height: 110px;
             color: aliceblue;
-            /* background: linear-gradient(45deg, purple, pink); */
             background-color: #6600cc;
             text-align: center;
             border-radius: 10px;
@@ -146,42 +140,42 @@ import * as dayjs from "dayjs";
 const todoList = ref([
   {
     id: 1,
-    todo: "오늘",
+    todo: "과제제출일",
     isCompleted: true,
     isEdit: false,
     date: dayjs().toDate(),
   },
   {
     id: 2,
-    todo: "1일전",
+    todo: "병원예약",
     isCompleted: false,
     isEdit: false,
     date: dayjs().subtract(1, "day").toDate(),
   },
   {
     id: 3,
-    todo: "2일전",
+    todo: "친구만나는 날",
     isCompleted: false,
     isEdit: false,
     date: dayjs().subtract(2, "day").toDate(),
   },
   {
     id: 4,
-    todo: "3일전",
+    todo: "세탁물 받기",
     isCompleted: false,
     isEdit: false,
     date: dayjs().subtract(3, "day").toDate(),
   },
   {
     id: 5,
-    todo: "4일전",
+    todo: "청소하기",
     isCompleted: false,
     isEdit: false,
     date: dayjs().subtract(4, "day").toDate(),
   },
   {
     id: 6,
-    todo: "과제하기",
+    todo: "택배받기",
     isCompleted: false,
     isEdit: false,
     date: dayjs().toDate(),

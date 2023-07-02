@@ -35,21 +35,26 @@
             </div>
             <v-divider style="padding-bottom: 10px" :thickness="2"></v-divider>
           </v-list-item>
-          <span style="padding-left: 40px; font-size: 20px; color: black">{{
-            dayjs(activeDate).format("M.DD")
+          <span style="padding-left: 40px; font-size: 16px; color: black">{{
+            dayjs(activeDate).format("DD일")
           }}</span>
           <v-list-item v-for="item in activeDateList" :key="item.id">
             <!-- <span>{{ dayjs(item.date).format("YYYY년MM월DD일") }}</span> -->
-            <span
+            <p
               style="
-                padding-left: 40px;
-                font-size: 17px;
+                padding: 10px;
+                font-size: 16px;
                 font-weight: bold;
                 color: #6600cc;
+                border: 1px solid gray;
+                margin-left: 20px;
+                margin-right: 20px;
+                border-radius: 5px;
+                background-color: rgb(249, 240, 249);
               "
             >
-              ｜ {{ item.todo }}
-            </span>
+              ο {{ item.todo }}
+            </p>
           </v-list-item>
         </v-list>
       </v-card>
