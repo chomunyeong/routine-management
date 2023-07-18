@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="month-list">
     <div v-for="monthItem in sortedMonthList" :key="monthItem.month">
       <h2>{{ monthItem.month }}월</h2>
@@ -43,4 +43,4 @@ const sortedMonthList = computed(() => {
 
   return resultList;
 });
-</script>
+</script> -->

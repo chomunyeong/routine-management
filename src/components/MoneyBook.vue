@@ -2,8 +2,9 @@
   <!-- 날짜 -->
   <div class="date-header">
     <span class="date" :v-model="MoneyBookList.date">
+      전체 내역
       <!-- {{ dayjs().Year() }}. -->
-      {{ dayjs().month() + 1 }}.{{ dayjs().date() }}({{ days }})
+      <!-- {{ dayjs().month() + 1 }}.{{ dayjs().date() }}({{ days }}) -->
     </span>
     <div class="divider"></div>
   </div>
@@ -42,11 +43,11 @@ let days = week[today.value.getDay()];
 // 날짜 초기값
 const targetDate = ref(new Date());
 
-const computedMoneyBook = computed(() => {
-  return props.MoneyBookList.value.filter((item) => {
-    return dayjs(item.date).isSame(dayjs(targetDate.value), "date");
-  });
-});
+// const computedMoneyBook = computed(() => {
+//   return props.MoneyBookList.value.filter((item) => {
+//     return dayjs(item.date).isSame(dayjs(targetDate.value), "date");
+//   });
+// });
 </script>
 
 <style>

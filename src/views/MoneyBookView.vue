@@ -8,19 +8,32 @@
   </BaseHeader>
   <div class="isIncome-container">
     <div class="month-list">
-      <v-btn icon="mdi-menu-left" @click="changeMonth(-1)"></v-btn>
+      <v-btn
+        icon="mdi-menu-left"
+        @click="changeMonth(-1)"
+        style="margin-left: 20px"
+      ></v-btn>
       <span style="margin-left: 15px; margin-right: 15px; color: white"
         >{{ current_month }}월</span
       >
       <v-btn icon="mdi-menu-right" @click="changeMonth(+1)"></v-btn>
     </div>
     <br />
-    <p style="color: white">
-      지출 <b style="color: white">{{ -expense }}원</b>
+    <p style="color: white; margin-left: 20px">
+      지출 <b style="color: white; margin-left: 15px">{{ -expense }}원</b>
     </p>
-    <p style="color: white">
-      수입 <b style="color: green">{{ -income }}원</b>
+    <p style="color: white; margin-left: 20px; margin-top: 5px">
+      수입
+      <b style="color: rgb(255, 143, 162); margin-left: 15px"
+        >{{ -income }}원</b
+      >
     </p>
+    <!-- <p style="color: white; margin-left: 20px">
+      총계
+      <b style="color: rgb(255, 143, 162); margin-left: 15px"
+        >{{ -income + expense }}원</b
+      >
+    </p> -->
   </div>
   <!-- <v-divider
     thickness="20px"
@@ -36,13 +49,13 @@
       :key="item.date"
       :MoneyBookList="MoneyBookList"
     /> -->
-  <MoneyBook
-    v-for="item in sortedMoneyBookList"
+  <!-- <MoneyBook
+    v-for="item in sortDayList"
     :key="item.date"
     :MoneyBookList="MoneyBookList"
-    @deleteMoneyBook="deleteMoneyBook"
+    @deleteMoneyBook="deleteMoneyBook(index)"
   >
-  </MoneyBook>
+  </MoneyBook> -->
   <!-- </div> -->
   <!-- 날짜 -->
   <div class="all-list">
@@ -71,7 +84,7 @@
               icon="mdi-trash-can-outline"
               size="small"
               style="margin-left: 10px"
-              @click="emits('deleteMoneyBook', index)"
+              @click="deleteMoneyBook(index)"
             ></v-btn>
           </span>
         </div>
@@ -92,6 +105,7 @@ import { ref, computed } from "vue ";
 
 let today = ref(new Date());
 
+// 요일반환
 const getDayOfWeek = (date) => {
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const dayIndex = dayjs(date).day();
@@ -137,22 +151,23 @@ const MoneyBookList = ref([
     title: "카페",
     amount: 6000,
     isIncome: false,
-    date: dayjs().subtract(2, "day").toDate(),
+    date: dayjs().subtract(12, "day").toDate(),
   },
   {
     title: "저녁밥",
     amount: 10000,
     isIncome: false,
-    date: dayjs().subtract(5, "day").toDate(),
+    date: dayjs().subtract(15, "day").toDate(),
   },
   {
     title: "쇼핑",
     amount: 10000,
     isIncome: false,
-    date: dayjs().subtract(6, "day").toDate(),
+    date: dayjs().subtract(16, "day").toDate(),
   },
 ]);
 
+// 날짜별 가계부 항목 정렬 및 반환
 const sortDayList = computed(() => {
   const sortedMoneyBookList = MoneyBookList.value.sort(
     (a, b) => new Date(b.date) - new Date(a.date)
@@ -202,6 +217,7 @@ const sortDayList = computed(() => {
   return resultList;
 });
 
+// 현재월에 해당하는 가계부항목 필터링
 const filteredSortDayList = computed(() => {
   const filteredList = sortDayList.value.filter((item) =>
     dayjs(item.date).isSame(
@@ -257,11 +273,12 @@ const expense = computed(() => {
 }
 .isIncome-container {
   padding: 20px;
-  font-size: 20px;
+  font-size: 19px;
   background-color: #6600cc;
   margin-left: -16px;
   margin-right: -16px;
   padding-top: 40px;
+  padding-bottom: 40px;
 }
 .addButton-item {
   position: relative;

@@ -1,8 +1,7 @@
-<!-- 수정중 -->
 <template>
   <v-tabs v-model="tab" color="#6600cc" align-tabs="center">
-    <v-tab :value="1">완료</v-tab>
-    <v-tab :value="2">미완료</v-tab>
+    <v-tab :value="1">오늘 할일</v-tab>
+    <v-tab :value="2">가계부</v-tab>
   </v-tabs>
   <v-divider></v-divider>
   <v-window v-model="tab">

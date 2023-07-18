@@ -33,8 +33,9 @@
 </template>
 <script setup>
 import { ref, computed } from "vue";
-
+// 편집된 todo항목의 값
 const editTodoItem = ref("");
+// 편집중인 작업 항목 인덱스
 const currentTargetIdx = ref("");
 
 const props = defineProps(["todoItem", "isVisible"]);

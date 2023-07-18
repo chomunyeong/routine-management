@@ -3,26 +3,38 @@
     class="pa-3"
     style="border: 1.5px solid #e5e5e5; border-radius: 15px; margin-top: 15px"
   >
-    <v-row><ChartTodo :todoList="todoList" /></v-row>
-    <v-row>
-      <span
-        style="
-          color: #4c0090;
-          display: inline-block;
-          width: 95%;
-          margin-top: 15px;
-          padding-left: 15px;
-        "
-      >
-      </span>
-    </v-row>
     <v-row>
       <v-col>
+        <div class="text-center">
+          <v-progress-circular
+            v-model="chart"
+            :size="100"
+            :width="18"
+            color="#4c0090"
+          >
+            {{ chart }}%</v-progress-circular
+          >
+        </div>
+      </v-col>
+      <v-col>
         <div>
-          <p>평균 완료 개수</p>
-          <p>평균 완료율 58.6 %</p>
+          <p style="text-align: center; margin-top: 15px">
+            평균 완료율은
+            <br />
+            <b style="color: #4c0090; font-size: large">
+              {{
+                Math.round(
+                  (todoList.filter((item) => item.isCompleted).length /
+                    todoList.length) *
+                    100
+                )
+              }}
+              %</b
+            >
+            입니다
+          </p>
           <br />
-          <p style="font-size: 19px; color: #4c0090">
+          <p style="font-size: 19px; color: #4c0090; text-align: center">
             <b>잘 하고 있어요!</b>
           </p>
         </div>
@@ -58,7 +70,7 @@
           outline
           >전체
           <br />
-          <p style="margin-top: 10px; font-size: x-large">
+          <p style="margin-top: 10px; font-size: large">
             <b> {{ todoList.length }}</b>
           </p>
         </v-card>
@@ -77,7 +89,7 @@
           outline
           >완료
           <br />
-          <p style="margin-top: 10px; font-size: x-large">
+          <p style="margin-top: 10px; font-size: large">
             <b> {{ todoList.filter((item) => item.isCompleted).length }}</b>
           </p>
         </v-card>
@@ -97,7 +109,7 @@
         >
           미완료
           <br />
-          <p style="margin-top: 10px; font-size: x-large">
+          <p style="margin-top: 10px; font-size: large">
             <b>
               {{
                 todoList.length -
@@ -129,13 +141,21 @@
     />
   </v-card>
 </template>
+
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import TodoList from "./TodoList.vue";
 // import TodoListAdd from "./TodoListAdd.vue";
 import TodoListEdit from "./TodoListEdit.vue";
-import ChartTodo from "./ChartTodo.vue";
 import * as dayjs from "dayjs";
+
+const chart = computed(() => {
+  return Math.round(
+    (todoList.value.filter((item) => item.isCompleted).length /
+      todoList.value.length) *
+      100
+  );
+});
 
 const todoList = ref([
   {
@@ -211,8 +231,8 @@ const todoListEditRef = ref(null);
 // 팝업창 열렸을 때
 const editTodoRequest = (targetIdx) => {
   isVisible.value = !isVisible.value;
-  if (isVisible.value) {
-    todoListEditRef.value.setValue(targetIdx, todoList[targetIdx].todo);
+  if (targetIdx >= 0 && targetIdx < todoList.value.length) {
+    todoListEditRef.value.setValue(targetIdx, todoList.value[targetIdx].todo);
   }
 };
 
@@ -224,3 +244,8 @@ const editTodoFinish = (index, value) => {
 let today = new Date();
 let month = today.getMonth() + 1;
 </script>
+<style scoped>
+.v-progress-circular {
+  margin: 1rem;
+}
+</style>
