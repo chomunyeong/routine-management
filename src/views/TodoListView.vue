@@ -84,45 +84,45 @@ const todoList = ref([
   },
   {
     id: 2,
+    todo: "택배받기",
+    isCompleted: false,
+    isEdit: false,
+    date: dayjs().toDate(),
+  },
+  {
+    id: 3,
     todo: "병원예약",
     isCompleted: false,
     isEdit: false,
     date: dayjs().subtract(1, "day").toDate(),
   },
   {
-    id: 3,
+    id: 4,
     todo: "친구만나는 날",
     isCompleted: false,
     isEdit: false,
     date: dayjs().subtract(2, "day").toDate(),
   },
   {
-    id: 4,
+    id: 5,
     todo: "세탁물 받기",
     isCompleted: false,
     isEdit: false,
     date: dayjs().subtract(3, "day").toDate(),
   },
   {
-    id: 5,
+    id: 6,
     todo: "청소하기",
     isCompleted: false,
     isEdit: false,
     date: dayjs().subtract(4, "day").toDate(),
-  },
-  {
-    id: 6,
-    todo: "택배받기",
-    isCompleted: false,
-    isEdit: false,
-    date: dayjs().toDate(),
   },
 ]);
 
 // onMounted(() => {
 //   setTimeout(() => {
 //     todoList.value.push({
-//       id: 6,
+//       id: 7,
 //       todo: "5일전",
 //       isCompleted: false,
 //       isEdit: false,

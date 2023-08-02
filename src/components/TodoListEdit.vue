@@ -52,6 +52,7 @@ const computedIsVisible = computed({
 
 // 저장
 const save = () => {
+  console.log(currentTargetIdx.value, editTodoItem.value);
   emits("editTodo", currentTargetIdx.value, editTodoItem.value);
   close();
 };
@@ -63,8 +64,8 @@ const close = () => {
   emits("update:isVisible", false);
 };
 
-const setValue = (idx, title) => {
-  currentTargetIdx.value = idx;
+const setValue = (id, title) => {
+  currentTargetIdx.value = id;
   editTodoItem.value = title;
 };
 

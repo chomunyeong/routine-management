@@ -1,11 +1,7 @@
 <template>
   <!-- 날짜 -->
   <div class="date-header">
-    <span class="date" :v-model="MoneyBookList.date">
-      전체 내역
-      <!-- {{ dayjs().Year() }}. -->
-      <!-- {{ dayjs().month() + 1 }}.{{ dayjs().date() }}({{ days }}) -->
-    </span>
+    <span class="date" :v-model="MoneyBookList.date"> 전체 내역 </span>
     <div class="divider"></div>
   </div>
   <!-- 리스트 -->
@@ -29,25 +25,8 @@
   </div>
 </template>
 <script setup>
-import { ref, computed } from "vue";
-import * as dayjs from "dayjs";
-
 const props = defineProps(["MoneyBookList"]);
 const emits = defineEmits(["deleteMoneyBook"]);
-
-let today = ref(new Date());
-
-const week = ["일", "월", "화", "수", "목", "금", "토"];
-let days = week[today.value.getDay()];
-
-// 날짜 초기값
-const targetDate = ref(new Date());
-
-// const computedMoneyBook = computed(() => {
-//   return props.MoneyBookList.value.filter((item) => {
-//     return dayjs(item.date).isSame(dayjs(targetDate.value), "date");
-//   });
-// });
 </script>
 
 <style>

@@ -28,35 +28,7 @@
         >{{ -income }}원</b
       >
     </p>
-    <!-- <p style="color: white; margin-left: 20px">
-      총계
-      <b style="color: rgb(255, 143, 162); margin-left: 15px"
-        >{{ -income + expense }}원</b
-      >
-    </p> -->
   </div>
-  <!-- <v-divider
-    thickness="20px"
-    style="color: violet; margin-left: -50px"
-  ></v-divider> -->
-  <!-- MoneyBook.vue -->
-  <!-- <div v-for="item in sortedMoneyBookList" :key="item.date">
-    <p>{{ dayjs(item.date).format("YYYY/MM/DD") }} - {{ item.title }}</p>
-  </div> -->
-  <!-- <div class="moneyBook-container">
-    <MoneyBookedit
-      v-for="item in sortedMoneyBookList"
-      :key="item.date"
-      :MoneyBookList="MoneyBookList"
-    /> -->
-  <!-- <MoneyBook
-    v-for="item in sortDayList"
-    :key="item.date"
-    :MoneyBookList="MoneyBookList"
-    @deleteMoneyBook="deleteMoneyBook(index)"
-  >
-  </MoneyBook> -->
-  <!-- </div> -->
   <!-- 날짜 -->
   <div class="all-list">
     <div
@@ -227,10 +199,6 @@ const filteredSortDayList = computed(() => {
   );
   return filteredList;
 });
-
-// sortedMoneyBookList.forEach((item) => {
-//   console.log(`${dayjs(item.date).format("YYYY/MM/DD")} - ${item.title}`);
-// });
 
 const addMoneyBook = (inputItem) => {
   MoneyBookList.value.push({ ...inputItem });

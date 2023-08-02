@@ -133,7 +133,6 @@
       @deleteTodo="deleteTodo"
       @editTodo="editTodoRequest"
     />
-    <!-- <TodoListAdd @addTodo="addTodo" /> -->
     <todo-list-edit
       v-model:isVisible="isVisible"
       ref="todoListEditRef"
@@ -145,7 +144,6 @@
 <script setup>
 import { ref, computed } from "vue";
 import TodoList from "./TodoList.vue";
-// import TodoListAdd from "./TodoListAdd.vue";
 import TodoListEdit from "./TodoListEdit.vue";
 import * as dayjs from "dayjs";
 
@@ -201,15 +199,6 @@ const todoList = ref([
     date: dayjs().toDate(),
   },
 ]);
-
-// todo 추가
-// const addTodo = (title) => {
-//   todoList.value.push({
-//     id: todoList.value[todoList.value.length - 1].id + 1,
-//     todo: title,
-//     isCompleted: false,
-//   });
-// };
 
 // todo 삭제
 const deleteTodo = (index) => {

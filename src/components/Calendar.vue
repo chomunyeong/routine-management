@@ -39,7 +39,6 @@
             dayjs(activeDate).format("DD일")
           }}</span>
           <v-list-item v-for="item in activeDateList" :key="item.id">
-            <!-- <span>{{ dayjs(item.date).format("YYYY년MM월DD일") }}</span> -->
             <p
               style="
                 padding: 10px;

@@ -2,20 +2,6 @@
   <v-container fluid>
     <v-row v-for="(todo, index) in props.todoList" :key="todo.id">
       <v-col cols="0" lg="0">
-        <!-- 체크박스 -->
-        <!-- <input
-          type="checkbox"
-          class="check-box"
-          :value="todo.isCompleted"
-          :id="todo.id"
-          @click="emits('completeChange', index)"
-        /> -->
-        <!-- <v-checkbox
-          class="check-box"
-          :value="todo.isCompleted"
-          :id="todo.id"
-          @click="emits('completeChange', index)"
-        /> -->
         <v-checkbox
           color="#6600cc"
           v-model="todo.isCompleted"

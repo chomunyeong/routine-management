@@ -14,7 +14,6 @@
           icon="mdi-plus"
           size="small"
         ></v-btn>
-        <!-- <v-btn dark v-bind="props"> + 추가 </v-btn> -->
       </template>
       <v-card>
         <v-toolbar dark color="deep-purple-accent-4">
